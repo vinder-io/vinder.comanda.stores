@@ -31,4 +31,20 @@ public static class EstablishmentMapper
         Owner = establishment.Owner,
         Branding = establishment.Branding
     };
+
+    public static Domain.Entities.Establishment AsEstablishment(this Domain.Entities.Establishment establishment, EstablishmentEditionScheme edition)
+    {
+        establishment.Properties = new Properties(
+            Title: edition.Title,
+            Description: edition.Description
+        );
+
+        establishment.Branding = new Branding(
+            PrimaryColor: edition.Branding.PrimaryColor,
+            SecondaryColor: edition.Branding.SecondaryColor,
+            Logo: edition.Branding.Logo
+        );
+
+        return establishment;
+    }
 }

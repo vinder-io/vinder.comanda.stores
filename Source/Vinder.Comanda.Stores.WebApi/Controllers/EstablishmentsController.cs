@@ -21,6 +21,23 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
         };
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateEstablishmentAsync(
+        [FromBody] EstablishmentEditionScheme request, [FromRoute] string id, CancellationToken cancellation)
+    {
+        var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id }, cancellation);
+
+        return result switch
+        {
+            { IsSuccess: true } =>
+                StatusCode(StatusCodes.Status200OK, result.Data),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-84F47 */
+            { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error)
+        };
+    }
+
     [HttpPost("{id}/products")]
     public async Task<IActionResult> CreateProductAsync(
         [FromBody] ProductCreationScheme request, [FromRoute] string id, CancellationToken cancellation)
