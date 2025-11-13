@@ -12,7 +12,10 @@ public static class ProductPipelineDefinition
             FilterDefinitions.MatchIfNotEmpty(Documents.Products.EstablishmentId, filters.EstablishmentId),
 
             FilterDefinitions.MatchIfContains(Documents.Products.Title, filters.Title),
-            FilterDefinitions.MustBeWithinIfNotNull(Documents.Products.Price, filters.MinPrice, filters.MaxPrice)
+            FilterDefinitions.MatchBool(Documents.Products.IsDeleted, filters.IsDeleted),
+
+            FilterDefinitions.MustBeWithinIfNotNull(Documents.Products.Price, filters.MinPrice, filters.MaxPrice),
+            FilterDefinitions.MustBeWithinIfNotNull(Documents.Products.CreatedAt, filters.CreatedAfter, filters.CreatedBefore)
         };
 
         return pipeline.Match(Builders<BsonDocument>.Filter.And(definitions));

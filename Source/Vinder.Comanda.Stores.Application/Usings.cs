@@ -5,6 +5,7 @@ global using Vinder.Comanda.Stores.Domain.Errors;
 global using Vinder.Comanda.Stores.Domain.Repositories;
 global using Vinder.Comanda.Stores.Domain.Filtering;
 
+global using Vinder.Comanda.Stores.Application.Payloads;
 global using Vinder.Comanda.Stores.Application.Payloads.Establishment;
 global using Vinder.Comanda.Stores.Application.Payloads.Product;
 global using Vinder.Comanda.Stores.Application.Mappers;
