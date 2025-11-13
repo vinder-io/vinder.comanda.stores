@@ -8,7 +8,7 @@ public static class EstablishmentErrors
     );
 
     public static readonly Error EstablishmentDoesNotExist = new(
-        Code: "#COMANDA-ERROR-84F48",
+        Code: "#COMANDA-ERROR-0A2DF",
         Description: "the specified establishment does not exist."
     );
 }
