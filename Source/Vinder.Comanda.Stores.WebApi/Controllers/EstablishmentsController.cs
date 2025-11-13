@@ -94,4 +94,28 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
                 StatusCode(StatusCodes.Status422UnprocessableEntity, result.Error)
         };
     }
+
+    [HttpDelete("{id}/products/{productId}")]
+    public async Task<IActionResult> DeleteProductAsync(
+        [FromQuery] ProductDeletionScheme request, [FromRoute] string id, [FromRoute] string productId, CancellationToken cancellation)
+    {
+        var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id, ProductId = productId }, cancellation);
+
+        return result switch
+        {
+            { IsSuccess: true } => StatusCode(StatusCodes.Status204NoContent),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
+            { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-C2C1B */
+            { IsFailure: true } when result.Error == ProductErrors.ProductDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-9FF68 */
+            { IsFailure: true } when result.Error == ProductErrors.ProductBelongsToAnotherEstablishment =>
+                StatusCode(StatusCodes.Status422UnprocessableEntity, result.Error)
+        };
+    }
 }
