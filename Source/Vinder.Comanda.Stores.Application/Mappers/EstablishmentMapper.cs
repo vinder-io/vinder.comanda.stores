@@ -1,4 +1,4 @@
-﻿namespace Vinder.Comanda.Stores.Application.Mappers.Establishment;
+﻿namespace Vinder.Comanda.Stores.Application.Mappers;
 
 public static class EstablishmentMapper
 {
@@ -23,15 +23,6 @@ public static class EstablishmentMapper
         };
     }
 
-    public static EstablishmentScheme AsResponse(this Domain.Entities.Establishment establishment) => new()
-    {
-        Identifier = establishment.Id,
-        Title = establishment.Properties.Title,
-        Description = establishment.Properties.Description,
-        Owner = establishment.Owner,
-        Branding = establishment.Branding
-    };
-
     public static Domain.Entities.Establishment AsEstablishment(this Domain.Entities.Establishment establishment, EstablishmentEditionScheme edition)
     {
         establishment.Properties = new Properties(
@@ -47,4 +38,13 @@ public static class EstablishmentMapper
 
         return establishment;
     }
+
+    public static EstablishmentScheme AsResponse(this Domain.Entities.Establishment establishment) => new()
+    {
+        Identifier = establishment.Id,
+        Title = establishment.Properties.Title,
+        Description = establishment.Properties.Description,
+        Owner = establishment.Owner,
+        Branding = establishment.Branding
+    };
 }

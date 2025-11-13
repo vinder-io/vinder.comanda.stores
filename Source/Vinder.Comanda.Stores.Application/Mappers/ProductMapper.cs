@@ -1,4 +1,4 @@
-﻿namespace Vinder.Comanda.Stores.Application.Mappers.Product;
+﻿namespace Vinder.Comanda.Stores.Application.Mappers;
 
 public static class ProductMapper
 {
@@ -17,6 +17,23 @@ public static class ProductMapper
             Price = price,
             Metadata = metadata
         };
+    }
+
+    public static Domain.Entities.Product AsProduct(this ProductEditionScheme patch, Domain.Entities.Product product)
+    {
+        var properties = new Properties(
+            Title: patch.Title,
+            Description: patch.Description
+        );
+
+        var image = new Image(patch.Image);
+        var price = new Price(patch.Price);
+
+        product.Price = price;
+        product.Image = image;
+        product.Properties = properties;
+
+        return product;
     }
 
     public static ProductScheme AsResponse(this Domain.Entities.Product product) => new()
