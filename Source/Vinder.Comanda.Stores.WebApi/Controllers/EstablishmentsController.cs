@@ -48,7 +48,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
         {
             { IsSuccess: true } => StatusCode(StatusCodes.Status204NoContent),
 
-            /* for tracking purposes: raise error #COMANDA-ERROR-A4B58 */
+            /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
             { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
                 StatusCode(StatusCodes.Status404NotFound, result.Error)
         };
