@@ -8,8 +8,11 @@ global using Vinder.Comanda.Stores.Domain.Errors;
 
 global using Vinder.Comanda.Stores.Application.Payloads.Establishment;
 global using Vinder.Comanda.Stores.Application.Payloads.Product;
+global using Vinder.Comanda.Stores.Application.Mappers;
+global using Vinder.Comanda.Stores.Application.Gateways;
 
 global using Vinder.Comanda.Stores.Infrastructure.IoC.Extensions;
+global using Vinder.Comanda.Stores.Infrastructure.Gateways;
 global using Vinder.Comanda.Stores.CrossCutting.Configurations;
 
 global using Vinder.Dispatcher.Contracts;

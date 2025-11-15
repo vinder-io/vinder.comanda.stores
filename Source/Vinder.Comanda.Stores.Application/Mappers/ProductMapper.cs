@@ -44,4 +44,11 @@ public static class ProductMapper
         Image = product.Image.Path,
         Price = product.Price.Value
     };
+
+    public static ProductImageUploadScheme AsImage(this Stream stream, string productId, string establishmentId) => new()
+    {
+        Stream = stream,
+        ProductId = productId,
+        EstablishmentId = establishmentId
+    };
 }

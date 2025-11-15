@@ -11,6 +11,7 @@ public static class WebInfrastructureExtension
         services.AddCorsConfiguration();
         services.AddOpenApi();
         services.AddIdentityServer();
+        services.AddGateways(environment);
         services.AddFluentValidationAutoValidation(options =>
         {
             options.DisableDataAnnotationsValidation = true;

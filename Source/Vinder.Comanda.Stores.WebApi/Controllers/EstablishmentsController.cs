@@ -109,6 +109,27 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
         };
     }
 
+    [HttpPut("{id}/products/{productId}/image")]
+    public async Task<IActionResult> UploadProductImageAsync(
+        [FromRoute] string id, [FromRoute] string productId, [FromForm] IFormFile file, CancellationToken cancellation)
+    {
+        var stream = file.OpenReadStream();
+        var result = await dispatcher.DispatchAsync(stream.AsImage(productId, id), cancellation);
+
+        return result switch
+        {
+            { IsSuccess: true } => StatusCode(StatusCodes.Status204NoContent),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
+            { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-C2C1B */
+            { IsFailure: true } when result.Error == ProductErrors.ProductDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error),
+        };
+    }
+
     [HttpDelete("{id}/products/{productId}")]
     public async Task<IActionResult> DeleteProductAsync(
         [FromQuery] ProductDeletionScheme request, [FromRoute] string id, [FromRoute] string productId, CancellationToken cancellation)
