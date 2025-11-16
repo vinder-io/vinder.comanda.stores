@@ -6,14 +6,11 @@ public static class ProductMapper
     {
         var properties = new Properties(product.Title, product.Description);
         var metadata = new ProductMetadata(product.EstablishmentId);
-
-        var image = new Image(product.ImagePath);
         var price = new Price(product.Price);
 
         return new Domain.Entities.Product
         {
             Properties = properties,
-            Image = image,
             Price = price,
             Metadata = metadata
         };

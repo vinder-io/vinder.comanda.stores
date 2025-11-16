@@ -16,12 +16,6 @@ public sealed class ProductCreationSchemeValidator : AbstractValidator<ProductCr
             .MaximumLength(500)
             .WithMessage("product description must not exceed 500 characters.");
 
-        RuleFor(product => product.ImagePath)
-            .NotEmpty()
-            .WithMessage("product image path must be provided.")
-            .MaximumLength(300)
-            .WithMessage("product image path must not exceed 300 characters.");
-
         RuleFor(product => product.Price)
             .GreaterThan(0)
             .WithMessage("product price must be greater than zero.");
