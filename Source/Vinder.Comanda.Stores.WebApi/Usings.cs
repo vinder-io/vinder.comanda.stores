@@ -16,7 +16,9 @@ global using Vinder.Comanda.Stores.Application.Payloads;
 
 global using Vinder.Comanda.Stores.Infrastructure.IoC.Extensions;
 global using Vinder.Comanda.Stores.Infrastructure.Gateways;
+
 global using Vinder.Comanda.Stores.CrossCutting.Configurations;
+global using Vinder.Comanda.Stores.CrossCutting.Constants;
 
 global using Vinder.Dispatcher.Contracts;
 global using Vinder.IdentityProvider.Sdk.Extensions;
