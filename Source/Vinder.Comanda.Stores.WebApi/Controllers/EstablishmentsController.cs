@@ -23,7 +23,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
         return result switch
         {
             { IsSuccess: true } when result.Data is not null =>
-                StatusCode(StatusCodes.Status200OK, result.Data.Items),
+                StatusCode(StatusCodes.Status200OK, result.Data.Items)
         };
     }
 
