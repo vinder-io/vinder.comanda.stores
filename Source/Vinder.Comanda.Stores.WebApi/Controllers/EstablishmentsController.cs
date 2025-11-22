@@ -127,8 +127,6 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     {
         var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id, ProductId = productId }, cancellation);
 
-        // we know the switch here is not strictly necessary since we only handle the success case,
-        // but we keep it for consistency with the rest of the codebase and to follow established patterns.
         return result switch
         {
             { IsSuccess: true } =>
@@ -223,6 +221,27 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
 
             /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
             { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error)
+        };
+    }
+
+    [HttpPut("{id}/integrations/credentials/{credentialId}")]
+    public async Task<IActionResult> UpdateCredentialAsync(
+        [FromBody] IntegrationCredentialEditScheme request, [FromRoute] string id, [FromRoute] string credentialId, CancellationToken cancellation)
+    {
+        var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id, CredentialId = credentialId }, cancellation);
+
+        return result switch
+        {
+            { IsSuccess: true } =>
+                StatusCode(StatusCodes.Status200OK, result.Data),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
+            { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-2147F */
+            { IsFailure: true } when result.Error == CredentialErrors.CredentialDoesNotExist =>
                 StatusCode(StatusCodes.Status404NotFound, result.Error)
         };
     }
