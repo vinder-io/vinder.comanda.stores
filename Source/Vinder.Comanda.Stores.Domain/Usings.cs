@@ -8,5 +8,6 @@ global using Vinder.Internal.Essentials.Filters.Builders;
 
 global using Vinder.Comanda.Stores.Domain.Concepts;
 global using Vinder.Comanda.Stores.Domain.Entities;
+global using Vinder.Comanda.Stores.Domain.Builders;
 global using Vinder.Comanda.Stores.Domain.Filtering;
 global using Vinder.Comanda.Stores.Domain.Filtering.Builders;
