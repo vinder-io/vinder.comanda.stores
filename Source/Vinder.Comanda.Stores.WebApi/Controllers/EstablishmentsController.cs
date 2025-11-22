@@ -146,4 +146,36 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
                 StatusCode(StatusCodes.Status422UnprocessableEntity, result.Error)
         };
     }
+
+    [HttpGet("{id}/integrations/credentials")]
+    public async Task<IActionResult> GetIntegrationCredentialAsync(
+        [FromQuery] IntegrationCredentialsFetchParameters request, [FromRoute] string id, CancellationToken cancellation)
+    {
+        var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id }, cancellation);
+
+        return result switch
+        {
+            { IsSuccess: true } => StatusCode(StatusCodes.Status200OK, result.Data),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
+            { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error)
+        };
+    }
+
+    [HttpPost("{id}/integrations/credentials")]
+    public async Task<IActionResult> AssignIntegrationCredentialAsync(
+        [FromBody] IntegrationCredentialCreationScheme request, [FromRoute] string id, CancellationToken cancellation)
+    {
+        var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id }, cancellation);
+
+        return result switch
+        {
+            { IsSuccess: true } => StatusCode(StatusCodes.Status201Created, result.Data),
+
+            /* for tracking purposes: raise error #COMANDA-ERROR-0A2DF */
+            { IsFailure: true } when result.Error == EstablishmentErrors.EstablishmentDoesNotExist =>
+                StatusCode(StatusCodes.Status404NotFound, result.Error)
+        };
+    }
 }
