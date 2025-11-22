@@ -12,4 +12,8 @@ public static class Permissions
     public const string UpdateProduct = "permissions.stores.products.update";
     public const string UploadProductImage = "permissions.stores.products.upload.image";
     public const string DeleteProduct = "permissions.stores.products.delete";
+
+    public const string ViewCredentials = "permissions.stores.credentials.view";
+    public const string CreateCredential = "permissions.stores.credentials.create";
+    public const string UpdateCredential = "permissions.stores.credentials.update";
 }
