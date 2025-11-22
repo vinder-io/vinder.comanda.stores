@@ -1,5 +1,6 @@
 global using System.Text.Json.Serialization;
 
+global using Vinder.Comanda.Stores.Domain.Entities;
 global using Vinder.Comanda.Stores.Domain.Concepts;
 global using Vinder.Comanda.Stores.Domain.Errors;
 global using Vinder.Comanda.Stores.Domain.Repositories;
