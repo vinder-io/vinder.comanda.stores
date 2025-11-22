@@ -6,14 +6,11 @@ public static class ProductMapper
     {
         var properties = new Properties(product.Title, product.Description);
         var metadata = new ProductMetadata(product.EstablishmentId);
-
-        var image = new Image(product.ImagePath);
         var price = new Price(product.Price);
 
         return new Domain.Entities.Product
         {
             Properties = properties,
-            Image = image,
             Price = price,
             Metadata = metadata
         };
@@ -43,5 +40,12 @@ public static class ProductMapper
         Description = product.Properties.Description,
         Image = product.Image.Path,
         Price = product.Price.Value
+    };
+
+    public static ProductImageUploadScheme AsImage(this Stream stream, string productId, string establishmentId) => new()
+    {
+        Stream = stream,
+        ProductId = productId,
+        EstablishmentId = establishmentId
     };
 }

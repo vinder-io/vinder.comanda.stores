@@ -3,9 +3,9 @@
 public sealed record ProductsFetchParameters :
     IMessage<Result<PaginationScheme<ProductScheme>>>
 {
-    public string? Id { get; set; }
-    public string? EstablishmentId { get; set; }
-    public string? Title { get; set; }
+    public string? Id { get; init; }
+    public string? EstablishmentId { get; init; }
+    public string? Title { get; init; }
 
     public decimal? MinPrice { get; set; }
     public decimal? MaxPrice { get; set; }

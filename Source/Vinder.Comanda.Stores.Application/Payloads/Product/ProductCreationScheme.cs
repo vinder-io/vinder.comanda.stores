@@ -7,6 +7,5 @@ public sealed record ProductCreationScheme : IMessage<Result<ProductScheme>>
     public string EstablishmentId { get; set; } = default!;
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
-    public string ImagePath { get; set; } = default!;
     public decimal Price { get; set; }
 }

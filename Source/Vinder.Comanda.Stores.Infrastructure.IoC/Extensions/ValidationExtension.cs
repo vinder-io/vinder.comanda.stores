@@ -9,6 +9,6 @@ public static class ValidationExtension
         services.AddTransient<IValidator<EstablishmentEditionScheme>, EstablishmentEditionSchemeValidator>();
         services.AddTransient<IValidator<ProductCreationScheme>, ProductCreationSchemeValidator>();
         services.AddTransient<IValidator<ProductEditionScheme>, ProductEditionSchemeValidator>();
-        services.AddTransient<IValidator<IntegrationCredentialCreationScheme>, IntegrationCredentialCreationSchemeValidator>();
+        services.AddTransient<IValidator<ProductImageUploadScheme>, ProductImageUploadSchemeValidator>();
     }
 }
