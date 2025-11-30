@@ -1,14 +1,13 @@
 namespace Vinder.Comanda.Stores.Infrastructure.Gateways;
 
-public sealed class FileGateway(string rootPath) : IFileGateway
+public sealed class FileGateway(StorageOptions options) : IFileGateway
 {
-    public async Task<Image> UploadFileAsync(
-        Stream stream, CancellationToken cancellation = default)
+    public async Task<Image> UploadFileAsync(Stream stream, CancellationToken cancellation = default)
     {
-        Directory.CreateDirectory(rootPath);
+        Directory.CreateDirectory(options.RootPath);
 
         var fileName = $"{Guid.NewGuid()}.jpg";
-        var filePath = Path.Combine(rootPath, fileName);
+        var filePath = Path.Combine(options.RootPath, fileName);
 
         using var fileStream = new FileStream(
             path: filePath,
@@ -19,18 +18,17 @@ public sealed class FileGateway(string rootPath) : IFileGateway
 
         await stream.CopyToAsync(fileStream, cancellation);
 
-        return new Image(Path: $"uploads/{fileName}");
+        return new Image(Path: $"{options.AssetsDirectory}/{fileName}");
     }
 
-    public async Task<bool> DeleteFileAsync(
-        Image image, CancellationToken cancellation = default)
+    public async Task<bool> DeleteFileAsync(Image image, CancellationToken cancellation = default)
     {
         if (image is null || string.IsNullOrWhiteSpace(image.Path))
         {
             return false;
         }
 
-        var filePath = Path.Combine(rootPath, Path.GetFileName(image.Path));
+        var filePath = Path.Combine(options.RootPath, Path.GetFileName(image.Path));
         if (!File.Exists(filePath))
         {
             return false;

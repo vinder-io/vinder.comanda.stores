@@ -8,6 +8,7 @@ global using Vinder.Comanda.Stores.Domain.Repositories;
 
 global using Vinder.Comanda.Stores.Infrastructure.Pipelines;
 global using Vinder.Comanda.Stores.Infrastructure.Constants;
+global using Vinder.Comanda.Stores.Infrastructure.Options;
 
 global using Vinder.Comanda.Stores.Application.Gateways;
 global using Vinder.Comanda.Stores.Domain.Concepts;

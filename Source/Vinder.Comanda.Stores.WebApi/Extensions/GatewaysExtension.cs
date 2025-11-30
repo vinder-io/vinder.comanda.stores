@@ -6,7 +6,13 @@ public static class GatewaysExtension
     {
         services.AddSingleton<IFileGateway, FileGateway>(provider =>
         {
-            return new FileGateway(Path.Combine(environment.WebRootPath, "Uploads"));
+            var options = new StorageOptions
+            {
+                RootPath = Path.Combine(environment.WebRootPath, Storage.StaticAssetsDirectory),
+                AssetsDirectory = Storage.StaticAssetsDirectory,
+            };
+
+            return new FileGateway(options: options);
         });
     }
 }
