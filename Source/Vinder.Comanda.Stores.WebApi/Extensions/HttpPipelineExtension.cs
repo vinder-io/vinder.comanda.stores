@@ -6,7 +6,7 @@ public static class HttpPipelineExtension
     public static void UseHttpPipeline(this IApplicationBuilder app)
     {
         app.UseHttpsRedirection();
-        app.UseStaticFiles(); 
+        app.UseStaticFiles();
 
         app.UseRouting();
         app.UseCors();
