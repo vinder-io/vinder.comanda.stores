@@ -1,10 +1,10 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Handlers.Establishment;
 
-public sealed class IntegrationCredentialCreationHandler(IIntegrationCredentialsRepository repository, IEstablishmentRepository establishmentRepository) :
-    IMessageHandler<IntegrationCredentialCreationScheme, Result<IntegrationCredentialScheme>>
+public sealed class CredentialCreationHandler(ICredentialRepository repository, IEstablishmentRepository establishmentRepository) :
+    IMessageHandler<CredentialCreationScheme, Result<CredentialScheme>>
 {
-    public async Task<Result<IntegrationCredentialScheme>> HandleAsync(
-        IntegrationCredentialCreationScheme parameters, CancellationToken cancellation = default)
+    public async Task<Result<CredentialScheme>> HandleAsync(
+        CredentialCreationScheme parameters, CancellationToken cancellation = default)
     {
         var filters = EstablishmentFilters.WithSpecifications()
             .WithIdentifier(parameters.EstablishmentId)
@@ -15,7 +15,7 @@ public sealed class IntegrationCredentialCreationHandler(IIntegrationCredentials
 
         if (establishment is null)
         {
-            return Result<IntegrationCredentialScheme>.Failure(EstablishmentErrors.EstablishmentDoesNotExist);
+            return Result<CredentialScheme>.Failure(EstablishmentErrors.EstablishmentDoesNotExist);
         }
 
         var credential = await repository.InsertAsync(parameters.AsCredential(), cancellation);
@@ -27,6 +27,6 @@ public sealed class IntegrationCredentialCreationHandler(IIntegrationCredentials
 
         await establishmentRepository.UpdateAsync(establishment, cancellation);
 
-        return Result<IntegrationCredentialScheme>.Success(credential.AsResponse());
+        return Result<CredentialScheme>.Success(credential.AsResponse());
     }
 }

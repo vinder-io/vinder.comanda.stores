@@ -1,9 +1,9 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Validators.Establishment;
 
-public sealed class IntegrationCredentialCreationSchemeValidator :
-    AbstractValidator<IntegrationCredentialCreationScheme>
+public sealed class CredentialEditSchemeValidator :
+    AbstractValidator<CredentialEditScheme>
 {
-    public IntegrationCredentialCreationSchemeValidator()
+    public CredentialEditSchemeValidator()
     {
         RuleFor(credential => credential.Provider)
             .IsInEnum()

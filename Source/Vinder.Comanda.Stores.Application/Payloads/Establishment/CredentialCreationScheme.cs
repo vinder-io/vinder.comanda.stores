@@ -1,14 +1,10 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Payloads.Establishment;
 
-public sealed record IntegrationCredentialEditScheme :
-    IMessage<Result<IntegrationCredentialScheme>>
+public sealed record CredentialCreationScheme :
+    IMessage<Result<CredentialScheme>>
 {
     [property: JsonIgnore]
-    public string EstablishmentId { get; init; } = default!;
-
-    [property: JsonIgnore]
-    public string CredentialId { get; init; } = default!;
-
+    public string EstablishmentId { get; set; } = default!;
     public string SecretKey { get; init; } = default!;
 
     // represents the integration target as a payment gateway or communication channel

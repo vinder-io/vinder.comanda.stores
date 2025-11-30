@@ -196,7 +196,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     [HttpGet("{id}/integrations/credentials")]
     [Authorize(Roles = Permissions.ViewCredentials)]
     public async Task<IActionResult> GetIntegrationCredentialAsync(
-        [FromQuery] IntegrationCredentialsFetchParameters request, [FromRoute] string id, CancellationToken cancellation)
+        [FromQuery] CredentialsFetchParameters request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id }, cancellation);
 
@@ -213,7 +213,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     [HttpPost("{id}/integrations/credentials")]
     [Authorize(Roles = Permissions.CreateCredential)]
     public async Task<IActionResult> AssignIntegrationCredentialAsync(
-        [FromBody] IntegrationCredentialCreationScheme request, [FromRoute] string id, CancellationToken cancellation)
+        [FromBody] CredentialCreationScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id }, cancellation);
 
@@ -230,7 +230,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     [HttpPut("{id}/integrations/credentials/{credentialId}")]
     [Authorize(Roles = Permissions.UpdateCredential)]
     public async Task<IActionResult> UpdateCredentialAsync(
-        [FromBody] IntegrationCredentialEditScheme request, [FromRoute] string id, [FromRoute] string credentialId, CancellationToken cancellation)
+        [FromBody] CredentialEditScheme request, [FromRoute] string id, [FromRoute] string credentialId, CancellationToken cancellation)
     {
         var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id, CredentialId = credentialId }, cancellation);
 

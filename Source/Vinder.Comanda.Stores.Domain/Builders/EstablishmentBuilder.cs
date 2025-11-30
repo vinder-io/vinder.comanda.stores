@@ -4,7 +4,7 @@ public sealed class EstablishmentBuilder(Establishment establishment)
 {
     private readonly Establishment _establishment = establishment;
 
-    public EstablishmentBuilder SetCredential(IntegrationCredentials credential)
+    public EstablishmentBuilder SetCredential(Credential credential)
     {
         _establishment.Credentials.Add(credential);
         return this;
