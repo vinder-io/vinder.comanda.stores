@@ -1,10 +1,3 @@
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authentication;
-
 namespace Vinder.Comanda.Stores.TestSuite.Fixtures;
 
 public sealed class BypassAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) :
@@ -14,8 +7,8 @@ public sealed class BypassAuthenticationHandler(IOptionsMonitor<AuthenticationSc
     {
         var claims = new[]
         {
-            new Claim(ClaimTypes.Name, "vinder.internal.bypass.user"),
-            new Claim(ClaimTypes.NameIdentifier, "vinder.internal.bypass.user"),
+            new Claim(ClaimTypes.Name, "vinder"),
+            new Claim(ClaimTypes.NameIdentifier, Identifier.Generate<User>()),
         };
 
         var identity = new ClaimsIdentity(claims, Scheme.Name);

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-
 namespace Vinder.Comanda.Stores.TestSuite.Fixtures;
 
 public sealed class WebApplicationFixture : IAsyncLifetime
@@ -29,20 +26,7 @@ public sealed class WebApplicationFixture : IAsyncLifetime
             {
                 builder.ConfigureServices(services =>
                 {
-                    services.AddAuthentication(options =>
-                    {
-                        options.DefaultAuthenticateScheme = "vinder.internal.bypass.authentication";
-                        options.DefaultChallengeScheme = "vinder.internal.bypass.authentication";
-                        options.DefaultScheme = "vinder.internal.bypass.authentication";
-                    })
-                    .AddScheme<AuthenticationSchemeOptions, BypassAuthenticationHandler>("vinder.internal.bypass.authentication", _ => { });
-
-                    services.AddAuthorization(options =>
-                    {
-                        options.DefaultPolicy = new AuthorizationPolicyBuilder("vinder.internal.bypass.authentication")
-                            .RequireAuthenticatedUser()
-                            .Build();
-                    });
+                    services.AddBypassAuthentication();
 
                     var descriptor = services.SingleOrDefault(descriptor => descriptor.ServiceType == typeof(IMongoClient));
                     if (descriptor is not null)
