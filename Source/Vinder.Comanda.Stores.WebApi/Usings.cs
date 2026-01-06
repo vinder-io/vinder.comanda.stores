@@ -21,7 +21,6 @@ global using Vinder.Comanda.Stores.Infrastructure.Constants;
 global using Vinder.Comanda.Stores.Infrastructure.Options;
 
 global using Vinder.Comanda.Stores.CrossCutting.Configurations;
-global using Vinder.Comanda.Stores.CrossCutting.Constants;
 
 global using Vinder.Dispatcher.Contracts;
 global using Vinder.IdentityProvider.Sdk.Extensions;
