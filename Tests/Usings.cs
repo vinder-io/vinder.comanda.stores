@@ -31,9 +31,6 @@ global using Vinder.Comanda.Stores.Domain.Entities;
 global using Vinder.Comanda.Stores.Domain.Concepts;
 global using Vinder.Comanda.Stores.Domain.Filtering;
 
-global using Vinder.Comanda.Stores.Application.Payloads;
-global using Vinder.Comanda.Stores.CrossCutting.Constants;
-
 global using Vinder.Internal.Essentials.Patterns;
 global using Vinder.Internal.Essentials.Utilities;
 global using Vinder.Internal.Essentials.Primitives;
