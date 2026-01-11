@@ -38,7 +38,7 @@ public static class ProductMapper
         Identifier = product.Id,
         Title = product.Properties.Title,
         Description = product.Properties.Description,
-        Image = product.Image.Path,
+        Image = product.Image?.Path ?? string.Empty,
         Price = product.Price.Value
     };
 
