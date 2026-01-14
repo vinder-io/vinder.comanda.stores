@@ -4,8 +4,10 @@ global using System.Web;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.HttpLogging;
 
 global using Vinder.Comanda.Stores.WebApi.Extensions;
+global using Vinder.Comanda.Stores.WebApi.Constants;
 global using Vinder.Comanda.Stores.Domain.Errors;
 
 global using Vinder.Comanda.Stores.Application.Payloads.Establishment;
