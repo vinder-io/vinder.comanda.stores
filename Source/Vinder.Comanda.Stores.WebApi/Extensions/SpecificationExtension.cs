@@ -21,6 +21,8 @@ public static class SpecificationsExtension
                 {
                     flow.WithCredentialsLocation(CredentialsLocation.Body);
                 });
+
+                return;
             }
 
             var settings = app.ServiceProvider.GetService<ISettings>()!;
