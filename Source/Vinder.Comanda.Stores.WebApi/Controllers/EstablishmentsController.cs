@@ -6,6 +6,7 @@
 public sealed class EstablishmentsController(IDispatcher dispatcher) : ControllerBase
 {
     [HttpGet]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> GetEstablishmentsAsync(
         [FromQuery] EstablishmentsFetchParameters request, CancellationToken cancellation)
     {
@@ -29,6 +30,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPost]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> CreateEstablishmentAsync(
         [FromBody] EstablishmentCreationScheme request, CancellationToken cancellation)
     {
@@ -46,6 +48,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPut("{id}")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> UpdateEstablishmentAsync(
         [FromBody] EstablishmentEditionScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
@@ -63,6 +66,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpDelete("{id}")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> DeleteEstablishmentAsync(
         [FromQuery] EstablishmentDeletionScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
@@ -79,6 +83,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpGet("{id}/products")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> GetProductsAsync(
         [FromQuery] ProductsFetchParameters request, [FromRoute] string id, CancellationToken cancellation)
     {
@@ -102,6 +107,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPost("{id}/products")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> CreateProductAsync(
         [FromBody] ProductCreationScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
@@ -116,6 +122,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPut("{id}/products/{productId}")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> UpdateProductAsync(
         [FromBody] ProductEditionScheme request, [FromRoute] string id, [FromRoute] string productId, CancellationToken cancellation)
     {
@@ -141,6 +148,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPut("{id}/products/{productId}/image")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> UploadProductImageAsync(
         [FromRoute] string id, [FromRoute] string productId, [FromForm] IFormFile file, CancellationToken cancellation)
     {
@@ -162,6 +170,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpDelete("{id}/products/{productId}")]
+    [Stability(Stability.Stable)]
     public async Task<IActionResult> DeleteProductAsync(
         [FromQuery] ProductDeletionScheme request, [FromRoute] string id, [FromRoute] string productId, CancellationToken cancellation)
     {
@@ -186,6 +195,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpGet("{id}/integrations/credentials")]
+    [Stability(Stability.Experimental)]
     public async Task<IActionResult> GetIntegrationCredentialAsync(
         [FromQuery] CredentialsFetchParameters request, [FromRoute] string id, CancellationToken cancellation)
     {
@@ -202,6 +212,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPost("{id}/integrations/credentials")]
+    [Stability(Stability.Experimental)]
     public async Task<IActionResult> AssignIntegrationCredentialAsync(
         [FromBody] CredentialCreationScheme request, [FromRoute] string id, CancellationToken cancellation)
     {
@@ -218,6 +229,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     }
 
     [HttpPut("{id}/integrations/credentials/{credentialId}")]
+    [Stability(Stability.Experimental)]
     public async Task<IActionResult> UpdateCredentialAsync(
         [FromBody] CredentialEditScheme request, [FromRoute] string id, [FromRoute] string credentialId, CancellationToken cancellation)
     {
