@@ -19,11 +19,5 @@ public sealed class ProductEditionSchemeValidator : AbstractValidator<ProductEdi
         RuleFor(product => product.Price)
             .GreaterThan(0)
             .WithMessage("product price must be greater than 0.");
-
-        RuleFor(product => product.Image)
-            .NotEmpty()
-            .WithMessage("product image must be provided.")
-            .Must(uri => Uri.TryCreate(uri, UriKind.Absolute, out _))
-            .WithMessage("product image must be a valid URL.");
     }
 }

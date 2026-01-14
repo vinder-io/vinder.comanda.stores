@@ -25,11 +25,9 @@ public static class ProductMapper
             Description: patch.Description
         );
 
-        var image = new Image(patch.Image);
         var price = new Price(patch.Price);
 
         product.Price = price;
-        product.Image = image;
         product.Properties = properties;
 
         return product;
