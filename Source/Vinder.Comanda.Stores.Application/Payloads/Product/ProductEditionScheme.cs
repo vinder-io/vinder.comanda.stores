@@ -10,6 +10,5 @@ public sealed record ProductEditionScheme : IMessage<Result<ProductScheme>>
 
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
-    public string Image { get; set; } = default!;
     public decimal Price { get; set; } = default!;
 }
