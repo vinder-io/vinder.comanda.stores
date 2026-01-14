@@ -9,6 +9,7 @@ public static class HttpPipelineExtension
         app.UseStaticFiles();
 
         app.UseRouting();
+        app.UseHttpLogging();
         app.UseCors();
 
         app.UseAuthentication();

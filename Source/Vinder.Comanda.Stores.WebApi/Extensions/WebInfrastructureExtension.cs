@@ -12,6 +12,7 @@ public static class WebInfrastructureExtension
         services.AddOpenApi();
         services.AddIdentityServer();
         services.AddGateways(environment);
+        services.AddHttpObservabilityLogging();
         services.AddFluentValidationAutoValidation(options =>
         {
             options.DisableDataAnnotationsValidation = true;
