@@ -5,7 +5,7 @@ public static class SpecificationsExtension
 {
     public static void UseSpecification(this IEndpointRouteBuilder app, IWebHostEnvironment environment)
     {
-        var specification = app.MapScalarApiReference(options =>
+        app.MapScalarApiReference(options =>
         {
             options.DarkMode = false;
             options.HideDarkModeToggle = true;
