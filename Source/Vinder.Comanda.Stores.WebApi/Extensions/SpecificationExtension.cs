@@ -10,6 +10,8 @@ public static class SpecificationsExtension
             options.DarkMode = false;
             options.HideDarkModeToggle = true;
             options.HideClientButton = true;
+            options.HideModels = true;
+            options.HideSearch = true;
 
             options.WithTitle("Vinder Comanda Stores API");
             options.WithClassicLayout();
