@@ -17,7 +17,14 @@ public static class ObservabilityExtension
                 .ReadFrom.Services(services)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.Seq(settings.Observability.SeqServerUrl);
+                .WriteTo.Seq(settings.Observability.SeqServerUrl)
+                .WriteTo.Sentry(options =>
+                {
+                    options.Dsn = settings.Observability.SentryDsn;
+                    options.TracesSampleRate = 1.0;
+                    options.AttachStacktrace = true;
+                    options.Debug = true;
+                });
         });
     }
 }
