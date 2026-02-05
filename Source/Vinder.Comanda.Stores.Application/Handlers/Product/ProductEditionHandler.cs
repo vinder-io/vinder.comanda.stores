@@ -1,17 +1,15 @@
 namespace Vinder.Comanda.Stores.Application.Handlers.Product;
 
-public sealed class ProductEditionHandler(
-    IProductRepository productRepository,
-    IEstablishmentRepository establishmentRepository
-) : IMessageHandler<ProductEditionScheme, Result<ProductScheme>>
+public sealed class ProductEditionHandler(IProductCollection productCollection, IEstablishmentCollection establishmentCollection) :
+    IMessageHandler<ProductEditionScheme, Result<ProductScheme>>
 {
-    public async Task<Result<ProductScheme>> HandleAsync(ProductEditionScheme message, CancellationToken cancellation = default)
+    public async Task<Result<ProductScheme>> HandleAsync(ProductEditionScheme parameters, CancellationToken cancellation = default)
     {
         var establishmentFilters = EstablishmentFilters.WithSpecifications()
-            .WithIdentifier(message.EstablishmentId)
+            .WithIdentifier(parameters.EstablishmentId)
             .Build();
 
-        var establishments = await establishmentRepository.GetEstablishmentsAsync(establishmentFilters, cancellation);
+        var establishments = await establishmentCollection.FilterEstablishmentsAsync(establishmentFilters, cancellation);
         var establishment = establishments.FirstOrDefault();
 
         if (establishment is null)
@@ -20,10 +18,10 @@ public sealed class ProductEditionHandler(
         }
 
         var productFilters = ProductFilters.WithSpecifications()
-            .WithIdentifier(message.ProductId)
+            .WithIdentifier(parameters.ProductId)
             .Build();
 
-        var products = await productRepository.GetProductsAsync(productFilters, cancellation);
+        var products = await productCollection.FilterProductsAsync(productFilters, cancellation);
         var product = products.FirstOrDefault();
 
         if (product is null)
@@ -36,7 +34,7 @@ public sealed class ProductEditionHandler(
             return Result<ProductScheme>.Failure(ProductErrors.ProductBelongsToAnotherEstablishment);
         }
 
-        var updatedProduct = await productRepository.UpdateAsync(message.AsProduct(product), cancellation);
+        var updatedProduct = await productCollection.UpdateAsync(parameters.AsProduct(product), cancellation);
         var response = updatedProduct.AsResponse();
 
         return Result<ProductScheme>.Success(response);

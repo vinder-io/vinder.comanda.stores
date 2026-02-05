@@ -1,6 +1,6 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Handlers.Product;
 
-public sealed class ProductsFetchHandler(IProductRepository repository) :
+public sealed class ProductsFetchHandler(IProductCollection collection) :
     IMessageHandler<ProductsFetchParameters, Result<PaginationScheme<ProductScheme>>>
 {
     public async Task<Result<PaginationScheme<ProductScheme>>> HandleAsync(
@@ -18,8 +18,8 @@ public sealed class ProductsFetchHandler(IProductRepository repository) :
             .WithCreatedBefore(parameters.CreatedBefore)
             .Build();
 
-        var products = await repository.GetProductsAsync(filters, cancellation);
-        var totalCount = await repository.CountProductsAsync(filters, cancellation);
+        var products = await collection.FilterProductsAsync(filters, cancellation);
+        var totalCount = await collection.CountProductsAsync(filters, cancellation);
 
         var pagination = new PaginationScheme<ProductScheme>
         {

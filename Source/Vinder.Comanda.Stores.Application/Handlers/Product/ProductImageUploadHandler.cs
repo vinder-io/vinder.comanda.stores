@@ -1,6 +1,6 @@
 namespace Vinder.Comanda.Stores.Application.Handlers.Product;
 
-public sealed class ProductImageUploadHandler(IProductRepository productRepository, IEstablishmentRepository establishmentRepository, IFileGateway fileGateway) :
+public sealed class ProductImageUploadHandler(IProductCollection productCollection, IEstablishmentCollection establishmentCollection, IFileGateway fileGateway) :
     IMessageHandler<ProductImageUploadScheme, Result>
 {
     public async Task<Result> HandleAsync(ProductImageUploadScheme parameters, CancellationToken cancellation = default)
@@ -14,7 +14,7 @@ public sealed class ProductImageUploadHandler(IProductRepository productReposito
             .WithIdentifier(parameters.EstablishmentId)
             .Build();
 
-        var establishments = await establishmentRepository.GetEstablishmentsAsync(establishmentsFilters, cancellation);
+        var establishments = await establishmentCollection.FilterEstablishmentsAsync(establishmentsFilters, cancellation);
         var establishment = establishments.FirstOrDefault();
 
         if (establishment is null)
@@ -22,7 +22,7 @@ public sealed class ProductImageUploadHandler(IProductRepository productReposito
             return Result.Failure(EstablishmentErrors.EstablishmentDoesNotExist);
         }
 
-        var products = await productRepository.GetProductsAsync(productFilters, cancellation);
+        var products = await productCollection.FilterProductsAsync(productFilters, cancellation);
         var product = products.FirstOrDefault();
 
         if (product is null)
@@ -32,7 +32,7 @@ public sealed class ProductImageUploadHandler(IProductRepository productReposito
 
         product.Image = await fileGateway.UploadFileAsync(parameters.Stream, cancellation);
 
-        await productRepository.UpdateAsync(product, cancellation);
+        await productCollection.UpdateAsync(product, cancellation);
 
         return Result.Success();
     }
