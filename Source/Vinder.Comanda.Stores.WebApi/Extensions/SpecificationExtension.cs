@@ -12,8 +12,9 @@ public static class SpecificationsExtension
             options.HideClientButton = true;
             options.HideModels = true;
             options.HideSearch = true;
+            options.Servers = [];
 
-            options.WithTitle("Vinder Comanda Stores API");
+            options.WithTitle("comanda stores | vinder.io");
             options.WithClassicLayout();
 
             if (environment.IsProduction())
