@@ -1,6 +1,6 @@
-namespace Vinder.Comanda.Stores.Domain.Entities;
+namespace Vinder.Comanda.Stores.Domain.Aggregates;
 
-public sealed class Establishment : Entity
+public sealed class Establishment : Aggregate
 {
     public Properties Properties { get; set; } = default!;
     public Branding Branding { get; set; } = default!;

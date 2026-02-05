@@ -1,10 +1,10 @@
-﻿namespace Vinder.Comanda.Stores.Infrastructure.Repositories;
+﻿namespace Vinder.Comanda.Stores.Infrastructure.Persistence;
 
-public sealed class ProductRepository(IMongoDatabase database) :
-    BaseRepository<Product>(database, Collections.Products),
-    IProductRepository
+public sealed class ProductCollection(IMongoDatabase database) :
+    AggregateCollection<Product>(database, Collections.Products),
+    IProductCollection
 {
-    public async Task<IReadOnlyCollection<Product>> GetProductsAsync(
+    public async Task<IReadOnlyCollection<Product>> FilterProductsAsync(
         ProductFilters filters, CancellationToken cancellation = default)
     {
         var pipeline = PipelineDefinitionBuilder

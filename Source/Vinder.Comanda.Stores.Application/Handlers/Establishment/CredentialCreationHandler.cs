@@ -1,6 +1,6 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Handlers.Establishment;
 
-public sealed class CredentialCreationHandler(ICredentialRepository repository, IEstablishmentRepository establishmentRepository) :
+public sealed class CredentialCreationHandler(ICredentialCollection credentialCollection, IEstablishmentCollection establishmentCollection) :
     IMessageHandler<CredentialCreationScheme, Result<CredentialScheme>>
 {
     public async Task<Result<CredentialScheme>> HandleAsync(
@@ -10,7 +10,7 @@ public sealed class CredentialCreationHandler(ICredentialRepository repository, 
             .WithIdentifier(parameters.EstablishmentId)
             .Build();
 
-        var establishments = await establishmentRepository.GetEstablishmentsAsync(filters, cancellation);
+        var establishments = await establishmentCollection.FilterEstablishmentsAsync(filters, cancellation);
         var establishment = establishments.FirstOrDefault();
 
         if (establishment is null)
@@ -18,14 +18,14 @@ public sealed class CredentialCreationHandler(ICredentialRepository repository, 
             return Result<CredentialScheme>.Failure(EstablishmentErrors.EstablishmentDoesNotExist);
         }
 
-        var credential = await repository.InsertAsync(parameters.AsCredential(), cancellation);
+        var credential = await credentialCollection.InsertAsync(parameters.AsCredential(), cancellation: cancellation);
 
         establishment.WithChanges(builder =>
         {
             builder.SetCredential(credential);
         });
 
-        await establishmentRepository.UpdateAsync(establishment, cancellation);
+        await establishmentCollection.UpdateAsync(establishment, cancellation);
 
         return Result<CredentialScheme>.Success(credential.AsResponse());
     }

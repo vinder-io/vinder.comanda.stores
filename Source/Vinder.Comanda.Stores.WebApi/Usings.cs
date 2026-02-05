@@ -4,6 +4,7 @@ global using System.Web;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.OpenApi.Models;
 
 global using Vinder.Comanda.Stores.WebApi.Extensions;
 global using Vinder.Comanda.Stores.WebApi.Constants;
@@ -24,7 +25,7 @@ global using Vinder.Comanda.Stores.Infrastructure.Options;
 global using Vinder.Comanda.Stores.CrossCutting.Configurations;
 
 global using Vinder.Dispatcher.Contracts;
-global using Vinder.IdentityProvider.Sdk.Extensions;
+global using Vinder.Federation.Sdk.Extensions;
 
 global using Scalar.AspNetCore;
 global using Serilog;

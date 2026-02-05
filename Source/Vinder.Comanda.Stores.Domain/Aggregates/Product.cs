@@ -1,6 +1,6 @@
-﻿namespace Vinder.Comanda.Stores.Domain.Entities;
+﻿namespace Vinder.Comanda.Stores.Domain.Aggregates;
 
-public sealed class Product : Entity
+public sealed class Product : Aggregate
 {
     public Image Image { get; set; } = default!;
     public Price Price { get; set; } = default!;

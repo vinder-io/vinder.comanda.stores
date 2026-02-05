@@ -1,12 +1,12 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Handlers.Product;
 
-public sealed class ProductCreationHandler(IProductRepository repository) :
+public sealed class ProductCreationHandler(IProductCollection collection) :
     IMessageHandler<ProductCreationScheme, Result<ProductScheme>>
 {
     public async Task<Result<ProductScheme>> HandleAsync(
-        ProductCreationScheme message, CancellationToken cancellation = default)
+        ProductCreationScheme parameters, CancellationToken cancellation = default)
     {
-        var product = await repository.InsertAsync(message.AsProduct(), cancellation);
+        var product = await collection.InsertAsync(parameters.AsProduct(), cancellation: cancellation);
         var response = product.AsResponse();
 
         return Result<ProductScheme>.Success(response);

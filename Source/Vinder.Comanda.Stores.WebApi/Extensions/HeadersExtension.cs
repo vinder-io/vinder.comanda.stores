@@ -24,7 +24,10 @@ public static class HeadersExtension
             (pagination.TotalPages > 1, $"<{BuildUrl(pagination.TotalPages - 1)}>; rel=\"last\"")
         };
 
-        var validLinks = links.Where(l => l.Condition).Select(l => l.Value).ToList();
+        var validLinks = links.Where(link => link.Condition)
+            .Select(link => link.Value)
+            .ToList();
+
         if (validLinks.Count > 0)
         {
             response.Headers.Append("Link", string.Join(", ", validLinks));

@@ -1,6 +1,6 @@
 namespace Vinder.Comanda.Stores.Application.Handlers.Establishment;
 
-public sealed class EstablishmentsFetchHandler(IEstablishmentRepository repository) :
+public sealed class EstablishmentsFetchHandler(IEstablishmentCollection collection) :
     IMessageHandler<EstablishmentsFetchParameters, Result<PaginationScheme<EstablishmentScheme>>>
 {
     public async Task<Result<PaginationScheme<EstablishmentScheme>>> HandleAsync(
@@ -16,8 +16,8 @@ public sealed class EstablishmentsFetchHandler(IEstablishmentRepository reposito
             .WithCreatedBefore(parameters.CreatedBefore)
             .Build();
 
-        var establishments = await repository.GetEstablishmentsAsync(filters, cancellation);
-        var totalCount = await repository.CountEstablishmentsAsync(filters, cancellation);
+        var establishments = await collection.FilterEstablishmentsAsync(filters, cancellation);
+        var totalCount = await collection.CountEstablishmentsAsync(filters, cancellation);
 
         var pagination = new PaginationScheme<EstablishmentScheme>
         {

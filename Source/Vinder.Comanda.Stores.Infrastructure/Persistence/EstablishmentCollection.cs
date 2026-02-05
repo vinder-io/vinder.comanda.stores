@@ -1,10 +1,10 @@
-﻿namespace Vinder.Comanda.Stores.Infrastructure.Repositories;
+﻿namespace Vinder.Comanda.Stores.Infrastructure.Persistence;
 
-public sealed class EstablishmentRepository(IMongoDatabase database) :
-    BaseRepository<Establishment>(database, Collections.Establishments),
-    IEstablishmentRepository
+public sealed class EstablishmentCollection(IMongoDatabase database) :
+    AggregateCollection<Establishment>(database, Collections.Establishments),
+    IEstablishmentCollection
 {
-    public async Task<IReadOnlyCollection<Establishment>> GetEstablishmentsAsync(
+    public async Task<IReadOnlyCollection<Establishment>> FilterEstablishmentsAsync(
         EstablishmentFilters filters, CancellationToken cancellation = default)
     {
         var pipeline = PipelineDefinitionBuilder

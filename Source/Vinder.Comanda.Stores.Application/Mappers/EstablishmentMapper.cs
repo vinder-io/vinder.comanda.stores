@@ -2,7 +2,7 @@
 
 public static class EstablishmentMapper
 {
-    public static Domain.Entities.Establishment AsEstablishment(this EstablishmentCreationScheme establishment)
+    public static Domain.Aggregates.Establishment AsEstablishment(this EstablishmentCreationScheme establishment)
     {
         var branding = new Branding(
             PrimaryColor: string.Empty,
@@ -15,7 +15,7 @@ public static class EstablishmentMapper
             Description: establishment.Description
         );
 
-        return new Domain.Entities.Establishment
+        return new Domain.Aggregates.Establishment
         {
             Properties = properties,
             Branding = branding,
@@ -23,7 +23,7 @@ public static class EstablishmentMapper
         };
     }
 
-    public static Domain.Entities.Establishment AsEstablishment(this Domain.Entities.Establishment establishment, EstablishmentEditionScheme edition)
+    public static Domain.Aggregates.Establishment AsEstablishment(this Domain.Aggregates.Establishment establishment, EstablishmentEditionScheme edition)
     {
         establishment.Properties = new Properties(
             Title: edition.Title,
@@ -39,7 +39,7 @@ public static class EstablishmentMapper
         return establishment;
     }
 
-    public static EstablishmentScheme AsResponse(this Domain.Entities.Establishment establishment) => new()
+    public static EstablishmentScheme AsResponse(this Domain.Aggregates.Establishment establishment) => new()
     {
         Identifier = establishment.Id,
         Title = establishment.Properties.Title,

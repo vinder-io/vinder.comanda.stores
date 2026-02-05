@@ -1,6 +1,6 @@
-﻿namespace Vinder.Comanda.Stores.Domain.Entities;
+﻿namespace Vinder.Comanda.Stores.Domain.Aggregates;
 
-public sealed class Credential : Entity
+public sealed class Credential : Aggregate
 {
     public IntegrationTarget Provider { get; set; } = default!;
     public string SecretKey { get; set; } = default!;
