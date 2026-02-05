@@ -25,35 +25,6 @@ jobs:
       - name: push docker image
         run: docker push vinderio/comanda.stores:latest
 
-      - name: deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            set -e
-
-            IMAGE="vinderio/comanda.stores:latest"
-
-            echo "pulling latest image..."
-            docker pull $IMAGE
-
-            echo "stopping old container (if exists)..."
-            docker stop comanda.stores.webapi || true
-            docker rm comanda.stores.webapi || true
-
-            echo "starting new container..."
-            docker run -d --name comanda.stores.webapi -p 8095:5000 \
-              -e ASPNETCORE_URLS=http://+:5000 \
-              -e Settings__Database__ConnectionString="${{ secrets.MONGO_CONNECTIONSTRING }}" \
-              -e Settings__Database__DatabaseName="${{ secrets.MONGO_DATABASENAME }}" \
-              -e Settings__Federation__BaseUrl="${{ secrets.FEDERATION_BASEURL }}" \
-              -e Settings__Federation__Tenant="${{ secrets.FEDERATION_TENANT }}" \
-              -e Settings__Federation__ClientId="${{ secrets.FEDERATION_CLIENTID }}" \
-              -e Settings__Federation__ClientSecret="${{ secrets.FEDERATION_CLIENTSECRET }}"
-              $IMAGE
-
-            echo "cleaning up old images..."
-            docker image prune -f
-
+      - name: deploy via easypanel webhook
+        run: |
+          curl -X POST ${{ secrets.PRODUCTION_DEPLOY_URL }}

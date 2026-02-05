@@ -1,19 +1,13 @@
-# this pipeline deploys the application to the staging environment on every push to main branch
-# it uses FTP to upload the published files to the somee.com server
-
-# we stop the application by uploading an app_offline.htm file
-# then we wait for a few seconds to let IIS unload the application and release file locks
-
-# https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/app-offline?view=aspnetcore-10.0
-
 name: staging deploy
 
 on:
+  pull_request:
+    branches: [main]
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,55 +17,34 @@ jobs:
       - name: setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: '8.0.x'
 
-      - name: publish application
+      - name: restore dependencies
+        run: dotnet restore
+
+      - name: build
+        run: dotnet build --no-restore --configuration Release
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: login to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: build docker image
+        run: docker build -t vinderio/comanda.subscriptions:staging .
+
+      - name: push docker image
+        run: docker push vinderio/comanda.subscriptions:staging
+
+      - name: deploy via easypanel webhook
         run: |
-          dotnet publish Source/Vinder.Comanda.Stores.WebApi \
-            -c Release \
-            -r win-x64 \
-            -o ./publish
-
-      - name: remove unwanted config files
-        run: |
-          rm -f ./publish/appsettings.json
-          rm -f ./publish/appsettings.Development.json
-          rm -f ./publish/web.config
-
-      - name: put application offline
-        run: echo "offline" > app_offline.htm
-
-      - name: upload app_offline.htm
-        run: |
-          sudo apt-get install -y lftp
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} comanda-stores-webapi.somee.com <<EOF
-          cd /www.comanda-stores-webapi.somee.com/
-          put app_offline.htm
-          quit
-          EOF
-
-      - name: wait for IIS
-        run: sleep 10
-
-      - name: deploy publish via FTP (no delete)
-        run: |
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} comanda-stores-webapi.somee.com <<EOF
-          set ftp:ssl-allow no
-          set ftp:chmod false
-          set mirror:set-permissions false
-          set mirror:use-pget-n false
-
-          mirror -R ./publish /www.comanda-stores-webapi.somee.com \
-            --only-newer \
-            --verbose
-
-          quit
-          EOF
-
-      - name: remove app_offline.htm
-        run: |
-          lftp -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASSWORD }} comanda-stores-webapi.somee.com <<EOF
-          cd /www.comanda-stores-webapi.somee.com/
-          rm app_offline.htm
-          quit
-          EOF
+          curl -f -X POST "${{ secrets.STAGING_DEPLOY_URL }}"
