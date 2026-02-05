@@ -40,10 +40,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: build docker image
-        run: docker build -t vinderio/comanda.subscriptions:staging .
+        run: docker build -t vinderio/comanda.stores:staging .
 
       - name: push docker image
-        run: docker push vinderio/comanda.subscriptions:staging
+        run: docker push vinderio/comanda.stores:staging
 
       - name: deploy via easypanel webhook
         run: |
