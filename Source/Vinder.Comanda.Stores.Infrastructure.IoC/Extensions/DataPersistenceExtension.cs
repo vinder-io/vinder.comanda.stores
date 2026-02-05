@@ -13,9 +13,9 @@ public static class DataPersistenceExtension
             return database;
         });
 
-        services.AddTransient<IActivityRepository, ActivityRepository>();
-        services.AddTransient<IEstablishmentRepository, EstablishmentRepository>();
-        services.AddTransient<IProductRepository, ProductRepository>();
-        services.AddTransient<ICredentialRepository, CredentialRepository>();
+        services.AddTransient<IActivityCollection, ActivityCollection>();
+        services.AddTransient<IEstablishmentCollection, EstablishmentCollection>();
+        services.AddTransient<IProductCollection, ProductCollection>();
+        services.AddTransient<ICredentialCollection, CredentialCollection>();
     }
 }
