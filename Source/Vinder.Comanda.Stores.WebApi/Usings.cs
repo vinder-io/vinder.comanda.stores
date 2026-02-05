@@ -4,7 +4,6 @@ global using System.Web;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
-global using Microsoft.AspNetCore.HttpLogging;
 
 global using Vinder.Comanda.Stores.WebApi.Extensions;
 global using Vinder.Comanda.Stores.WebApi.Constants;
@@ -28,4 +27,5 @@ global using Vinder.Dispatcher.Contracts;
 global using Vinder.IdentityProvider.Sdk.Extensions;
 
 global using Scalar.AspNetCore;
+global using Serilog;
 global using FluentValidation.AspNetCore;
