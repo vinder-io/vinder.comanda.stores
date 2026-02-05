@@ -1,10 +1,9 @@
 global using Vinder.Internal.Infrastructure.Persistence;
 global using Vinder.Internal.Infrastructure.Persistence.Pipelines;
-global using Vinder.Internal.Infrastructure.Persistence.Repositories;
 
 global using Vinder.Comanda.Stores.Domain.Aggregates;
 global using Vinder.Comanda.Stores.Domain.Filtering;
-global using Vinder.Comanda.Stores.Domain.Repositories;
+global using Vinder.Comanda.Stores.Domain.Collections;
 
 global using Vinder.Comanda.Stores.Infrastructure.Pipelines;
 global using Vinder.Comanda.Stores.Infrastructure.Constants;
