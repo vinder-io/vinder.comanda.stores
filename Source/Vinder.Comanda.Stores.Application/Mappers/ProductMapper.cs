@@ -2,14 +2,14 @@
 
 public static class ProductMapper
 {
-    public static Domain.Entities.Product AsProduct(this ProductCreationScheme product)
+    public static Domain.Aggregates.Product AsProduct(this ProductCreationScheme product)
     {
         var properties = new Properties(product.Title, product.Description);
         var metadata = new ProductMetadata(product.EstablishmentId);
         var price = new Price(product.Price);
         var image = new Image(string.Empty);
 
-        return new Domain.Entities.Product
+        return new Domain.Aggregates.Product
         {
             Properties = properties,
             Price = price,
@@ -18,7 +18,7 @@ public static class ProductMapper
         };
     }
 
-    public static Domain.Entities.Product AsProduct(this ProductEditionScheme patch, Domain.Entities.Product product)
+    public static Domain.Aggregates.Product AsProduct(this ProductEditionScheme patch, Domain.Aggregates.Product product)
     {
         var properties = new Properties(
             Title: patch.Title,
@@ -33,7 +33,7 @@ public static class ProductMapper
         return product;
     }
 
-    public static ProductScheme AsResponse(this Domain.Entities.Product product) => new()
+    public static ProductScheme AsResponse(this Domain.Aggregates.Product product) => new()
     {
         Identifier = product.Id,
         Title = product.Properties.Title,
