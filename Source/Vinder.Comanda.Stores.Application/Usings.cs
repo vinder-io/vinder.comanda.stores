@@ -3,7 +3,7 @@ global using System.Text.Json.Serialization;
 global using Vinder.Comanda.Stores.Domain.Aggregates;
 global using Vinder.Comanda.Stores.Domain.Concepts;
 global using Vinder.Comanda.Stores.Domain.Errors;
-global using Vinder.Comanda.Stores.Domain.Repositories;
+global using Vinder.Comanda.Stores.Domain.Collections;
 global using Vinder.Comanda.Stores.Domain.Filtering;
 
 global using Vinder.Comanda.Stores.Application.Payloads;
