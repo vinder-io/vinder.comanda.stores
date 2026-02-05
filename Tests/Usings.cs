@@ -27,7 +27,7 @@ global using Vinder.Comanda.Stores.TestSuite.Fixtures;
 global using Vinder.Comanda.Stores.TestSuite.Extensions;
 
 global using Vinder.Comanda.Stores.Domain.Repositories;
-global using Vinder.Comanda.Stores.Domain.Entities;
+global using Vinder.Comanda.Stores.Domain.Aggregates;
 global using Vinder.Comanda.Stores.Domain.Concepts;
 global using Vinder.Comanda.Stores.Domain.Filtering;
 
