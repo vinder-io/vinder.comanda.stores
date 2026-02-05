@@ -1,10 +1,10 @@
-# use ASP.NET Core 9.0 runtime image as base
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+# use ASP.NET Core 9.0 runtime image (alpine) as base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS base
 WORKDIR /app
 EXPOSE 8085
 
-# use SDK image for build
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+# use SDK image (alpine) for build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 WORKDIR /src
 
 # copy project files to restore dependencies
@@ -32,6 +32,9 @@ RUN dotnet publish "Vinder.Comanda.Stores.WebApi.csproj" -c Release -o /app/publ
 # final image to run the app
 FROM base AS final
 WORKDIR /app
+
+ENV ASPNETCORE_URLS=http://+:8080
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 # copy published files from the publish stage
 COPY --from=publish /app/publish .
