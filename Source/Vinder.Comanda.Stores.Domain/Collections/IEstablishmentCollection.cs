@@ -1,8 +1,8 @@
-﻿namespace Vinder.Comanda.Stores.Domain.Repositories;
+﻿namespace Vinder.Comanda.Stores.Domain.Collections;
 
-public interface IEstablishmentRepository : IBaseRepository<Establishment>
+public interface IEstablishmentCollection : IAggregateCollection<Establishment>
 {
-    public Task<IReadOnlyCollection<Establishment>> GetEstablishmentsAsync(
+    public Task<IReadOnlyCollection<Establishment>> FilterEstablishmentsAsync(
         EstablishmentFilters filters,
         CancellationToken cancellation = default
     );

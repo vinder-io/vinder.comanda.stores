@@ -1,8 +1,8 @@
-namespace Vinder.Comanda.Stores.Domain.Repositories;
+namespace Vinder.Comanda.Stores.Domain.Collections;
 
-public interface IProductRepository : IBaseRepository<Product>
+public interface IProductCollection : IAggregateCollection<Product>
 {
-    public Task<IReadOnlyCollection<Product>> GetProductsAsync(
+    public Task<IReadOnlyCollection<Product>> FilterProductsAsync(
         ProductFilters filters,
         CancellationToken cancellation = default
     );
