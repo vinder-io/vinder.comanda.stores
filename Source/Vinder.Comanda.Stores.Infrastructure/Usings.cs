@@ -2,7 +2,7 @@ global using Vinder.Internal.Infrastructure.Persistence;
 global using Vinder.Internal.Infrastructure.Persistence.Pipelines;
 global using Vinder.Internal.Infrastructure.Persistence.Repositories;
 
-global using Vinder.Comanda.Stores.Domain.Entities;
+global using Vinder.Comanda.Stores.Domain.Aggregates;
 global using Vinder.Comanda.Stores.Domain.Filtering;
 global using Vinder.Comanda.Stores.Domain.Repositories;
 
