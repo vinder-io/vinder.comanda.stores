@@ -1,17 +1,16 @@
 namespace Vinder.Comanda.Stores.Application.Handlers.Product;
 
 public sealed class ProductDeletionHandler(
-    IEstablishmentRepository establishmentRepository,
-    IProductRepository productRepository
-) : IMessageHandler<ProductDeletionScheme, Result>
+    IEstablishmentCollection establishmentCollection,
+    IProductCollection productCollection) : IMessageHandler<ProductDeletionScheme, Result>
 {
-    public async Task<Result> HandleAsync(ProductDeletionScheme message, CancellationToken cancellation = default)
+    public async Task<Result> HandleAsync(ProductDeletionScheme parameters, CancellationToken cancellation = default)
     {
         var establishmentFilters = EstablishmentFilters.WithSpecifications()
-            .WithIdentifier(message.EstablishmentId)
+            .WithIdentifier(parameters.EstablishmentId)
             .Build();
 
-        var establishments = await establishmentRepository.GetEstablishmentsAsync(establishmentFilters, cancellation);
+        var establishments = await establishmentCollection.FilterEstablishmentsAsync(establishmentFilters, cancellation);
         var existingEstablishment = establishments.FirstOrDefault();
 
         if (existingEstablishment is null)
@@ -21,10 +20,10 @@ public sealed class ProductDeletionHandler(
         }
 
         var productFilters = ProductFilters.WithSpecifications()
-            .WithIdentifier(message.ProductId)
+            .WithIdentifier(parameters.ProductId)
             .Build();
 
-        var products = await productRepository.GetProductsAsync(productFilters, cancellation);
+        var products = await productCollection.FilterProductsAsync(productFilters, cancellation);
         var existingProduct = products.FirstOrDefault();
 
         if (existingProduct is null)
@@ -39,7 +38,7 @@ public sealed class ProductDeletionHandler(
             return Result.Failure(ProductErrors.ProductBelongsToAnotherEstablishment);
         }
 
-        await productRepository.DeleteAsync(existingProduct, cancellation);
+        await productCollection.DeleteAsync(existingProduct, cancellation: cancellation);
 
         return Result.Success();
     }
