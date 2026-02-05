@@ -87,7 +87,7 @@ public sealed class EstablishmentsController(IDispatcher dispatcher) : Controlle
     public async Task<IActionResult> GetProductsAsync(
         [FromQuery] ProductsFetchParameters request, [FromRoute] string id, CancellationToken cancellation)
     {
-        var result = await dispatcher.DispatchAsync(request, cancellation);
+        var result = await dispatcher.DispatchAsync(request with { EstablishmentId = id }, cancellation);
 
         /* applies pagination navigation links according to RFC 8288 (web linking) */
         /* https://datatracker.ietf.org/doc/html/rfc8288 */
