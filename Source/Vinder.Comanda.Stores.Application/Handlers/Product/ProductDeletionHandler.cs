@@ -1,8 +1,7 @@
 namespace Vinder.Comanda.Stores.Application.Handlers.Product;
 
-public sealed class ProductDeletionHandler(
-    IEstablishmentCollection establishmentCollection,
-    IProductCollection productCollection) : IMessageHandler<ProductDeletionScheme, Result>
+public sealed class ProductDeletionHandler(IEstablishmentCollection establishmentCollection, IProductCollection productCollection) :
+    IMessageHandler<ProductDeletionScheme, Result>
 {
     public async Task<Result> HandleAsync(ProductDeletionScheme parameters, CancellationToken cancellation = default)
     {
