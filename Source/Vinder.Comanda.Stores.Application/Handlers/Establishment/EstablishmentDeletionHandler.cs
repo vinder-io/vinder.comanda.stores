@@ -1,16 +1,16 @@
 namespace Vinder.Comanda.Stores.Application.Handlers.Establishment;
 
-public sealed class EstablishmentDeletionHandler(IEstablishmentRepository repository) :
+public sealed class EstablishmentDeletionHandler(IEstablishmentCollection collection) :
     IMessageHandler<EstablishmentDeletionScheme, Result>
 {
     public async Task<Result> HandleAsync(
-        EstablishmentDeletionScheme message, CancellationToken cancellation = default)
+        EstablishmentDeletionScheme parameters, CancellationToken cancellation = default)
     {
         var filters = EstablishmentFilters.WithSpecifications()
-            .WithIdentifier(message.EstablishmentId)
+            .WithIdentifier(parameters.EstablishmentId)
             .Build();
 
-        var establishments = await repository.GetEstablishmentsAsync(filters, cancellation);
+        var establishments = await collection.FilterEstablishmentsAsync(filters, cancellation);
         var existingEstablishment = establishments.FirstOrDefault();
 
         if (existingEstablishment is null)
@@ -19,7 +19,7 @@ public sealed class EstablishmentDeletionHandler(IEstablishmentRepository reposi
             return Result.Failure(EstablishmentErrors.EstablishmentDoesNotExist);
         }
 
-        await repository.DeleteAsync(existingEstablishment, cancellation);
+        await collection.DeleteAsync(existingEstablishment, cancellation: cancellation);
 
         return Result.Success();
     }

@@ -1,6 +1,6 @@
 ﻿namespace Vinder.Comanda.Stores.Application.Handlers.Establishment;
 
-public sealed class CredentialsFetchHandler(IEstablishmentRepository repository) :
+public sealed class CredentialsFetchHandler(IEstablishmentCollection collection) :
     IMessageHandler<CredentialsFetchParameters, Result<IEnumerable<CredentialScheme>>>
 {
     public async Task<Result<IEnumerable<CredentialScheme>>> HandleAsync(
@@ -10,7 +10,7 @@ public sealed class CredentialsFetchHandler(IEstablishmentRepository repository)
             .WithIdentifier(parameters.EstablishmentId)
             .Build();
 
-        var establishments = await repository.GetEstablishmentsAsync(filters, cancellation);
+        var establishments = await collection.FilterEstablishmentsAsync(filters, cancellation);
         var establishment = establishments.FirstOrDefault();
 
         if (establishment is null)
