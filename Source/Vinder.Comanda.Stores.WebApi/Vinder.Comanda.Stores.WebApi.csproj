@@ -20,7 +20,7 @@
     <PackageReference Include="Sentry.Serilog" Version="6.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
-    <PackageReference Include="Vinder.IdentityProvider.Sdk" Version="1.0.9" />
+    <PackageReference Include="Vinder.Federation.Sdk" Version="1.0.16" />
   </ItemGroup>
 
   <ItemGroup>
